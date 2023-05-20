@@ -19,7 +19,7 @@ export const App = () => {
 
 	return (
 		<div className='App'>
-			<NavBar />
+			<NavBar guestUser={guestUserName} />
 			{!user && !guestUserName ? (
 				<Welcome skipSignIn={handleSkipSignIn} />
 			) : (

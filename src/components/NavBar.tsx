@@ -3,11 +3,15 @@ import { ReactComponent as TriumphLogo } from '../img/logo-symbol.98e44a7.svg';
 
 import { auth } from '../firebase';
 
-export const NavBar = () => {
+export const NavBar = ({ guestUser }: { guestUser: string }) => {
 	const [user] = useAuthState(auth);
 
 	const signOut = () => {
-		auth.signOut();
+		if (guestUser) {
+			window.location.reload();
+		} else if (user) {
+			auth.signOut();
+		}
 	};
 
 	return (
@@ -20,13 +24,11 @@ export const NavBar = () => {
 					<h1 style={{ fontSize: 32 }}>Triumph Chat</h1>
 				</div>
 			</div>
-			{user ? (
+			{user || guestUser ? (
 				<button onClick={signOut} className='sign-out' type='button'>
 					Sign Out
 				</button>
-			) : (
-				<></>
-			)}
+			) : null}
 		</nav>
 	);
 };

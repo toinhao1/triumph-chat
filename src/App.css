@@ -47,7 +47,7 @@ input {
 .sign-out {
 	padding: 5px 10px;
 	border-radius: 5px;
-	color: #88dded;
+	color: #f44a00;
 	border: 1px solid #1c2c4c;
 	background-color: #1c2c4c;
 	font-weight: 600;
@@ -62,6 +62,12 @@ input {
 }
 .welcome :is(h2, p, img) {
 	margin-bottom: 20px;
+}
+
+.skip-signin {
+	background-color:#f44a00;
+	border: none;
+	padding: 8px;
 }
 
 /* chat component */
@@ -113,7 +119,7 @@ input {
 	bottom: 0px;
 	width: 100%;
 	padding: 20px 30px;
-	background-color: #4c768d;
+	background-color: black;
 	display: flex;
 }
 .send-message > input {
@@ -139,7 +145,7 @@ input {
 	padding: 5px 10px;
 	border-radius: 0 5px 5px 0;
 	color: #242443;
-	border: 1px solid #7cc5d9;
-	background-color: #7cc5d9;
+	border: none;
+	background-color: #f44a00;
 	font-weight: 600;
 }

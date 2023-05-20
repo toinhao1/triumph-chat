@@ -19,7 +19,9 @@ export const Welcome = ({ skipSignIn }: { skipSignIn: () => void }) => {
 				<img onClick={googleSignIn} src={GoogleSignin} alt='sign in with google' />
 			</button>
 			<p>Skip Sign In</p>
-			<button onClick={skipSignIn}>Continue to chat</button>
+			<button className='skip-signin' onClick={skipSignIn}>
+				Continue to chat
+			</button>
 		</main>
 	);
 };
