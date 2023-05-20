@@ -16,6 +16,6 @@ In the project directory, you can run:
 
 Then the app should be running..
 
-Simple real time chat app, with possibility to sign in with google.
+Simple real time chat app, deployed to netlify, using firbae for database and realtime updates.
 
 Took me 2.5 hours.
