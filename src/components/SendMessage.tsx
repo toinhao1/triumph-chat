@@ -31,6 +31,7 @@ export const SendMessage = ({
 				text: message,
 				name: guestUser,
 				createdAt: new Date(),
+				avatar: 'https://gravatar.com/avatar/84018e5801585b89f0d478d2fb5cb7be?s=400&d=robohash&r=x',
 				uid: guestUser,
 			});
 		}

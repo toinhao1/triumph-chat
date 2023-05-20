@@ -1,16 +1,10 @@
-import { GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { ReactComponent as TriumphLogo } from '../img/logo-symbol.98e44a7.svg';
 
 import { auth } from '../firebase';
-import GoogleSignin from '../img/btn_google_signin_dark_pressed_web.png';
 
 export const NavBar = () => {
 	const [user] = useAuthState(auth);
-
-	const googleSignIn = () => {
-		const provider = new GoogleAuthProvider();
-		signInWithRedirect(auth, provider);
-	};
 
 	const signOut = () => {
 		auth.signOut();
@@ -18,15 +12,20 @@ export const NavBar = () => {
 
 	return (
 		<nav className='nav-bar'>
-			<h1>Triumph Chat</h1>
+			<div>
+				<div style={{ display: 'inline-block' }}>
+					<TriumphLogo style={{ paddingTop: 12 }} width={42} height={42} />
+				</div>
+				<div style={{ display: 'inline-block', paddingLeft: 5 }}>
+					<h1 style={{ fontSize: 32 }}>Triumph Chat</h1>
+				</div>
+			</div>
 			{user ? (
 				<button onClick={signOut} className='sign-out' type='button'>
 					Sign Out
 				</button>
 			) : (
-				<button className='sign-in'>
-					<img onClick={googleSignIn} src={GoogleSignin} alt='sign in with google' />
-				</button>
+				<></>
 			)}
 		</nav>
 	);
