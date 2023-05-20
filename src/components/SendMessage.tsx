@@ -1,8 +1,14 @@
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 import { useState, MutableRefObject, FormEvent } from 'react';
 import { auth, db } from '../firebase';
 
-export const SendMessage = ({ scroll }: { scroll: MutableRefObject<any> }) => {
+export const SendMessage = ({
+	scroll,
+	guestUser,
+}: {
+	scroll: MutableRefObject<any>;
+	guestUser: string;
+}) => {
 	const [message, setMessage] = useState('');
 
 	const sendMessage = async (event: FormEvent<HTMLFormElement>) => {
@@ -17,14 +23,15 @@ export const SendMessage = ({ scroll }: { scroll: MutableRefObject<any> }) => {
 				text: message,
 				name: displayName,
 				avatar: photoURL,
-				createdAt: serverTimestamp(),
+				createdAt: new Date(),
 				uid,
 			});
 		} else {
 			await addDoc(collection(db, 'messages'), {
 				text: message,
-				name: displayName,
-				createdAt: serverTimestamp(),
+				name: guestUser,
+				createdAt: new Date(),
+				uid: guestUser,
 			});
 		}
 		setMessage('');

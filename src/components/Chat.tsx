@@ -1,37 +1,45 @@
 import { useEffect, useRef, useState } from 'react';
-import { query, collection, orderBy, onSnapshot, limit } from 'firebase/firestore';
+import { query, collection, orderBy, onSnapshot, limit, Unsubscribe } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Message } from './Message';
 import { SendMessage } from './SendMessage';
 import { MessageType } from '../types';
 
-export const Chat = () => {
+export const Chat = ({ guestUser }: { guestUser: string }) => {
 	const [messages, setMessages] = useState<MessageType[]>([]);
-	const scroll = useRef();
+	const scroll = useRef(null);
 
-	useEffect(() => {
-		const q = query(collection(db, 'messages'), orderBy('createdAt', 'desc'), limit(50));
-
-		const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
-			const fetchedMessages: MessageType[] = [];
-			QuerySnapshot.forEach((doc) => {
-				fetchedMessages.push({ ...doc.data(), id: doc.id });
+	const useUnsubScribe = () => {
+		let unsubscribe = useRef<Unsubscribe>();
+		useEffect(() => {
+			const q = query(collection(db, 'messages'), orderBy('createdAt', 'desc'), limit(75));
+			unsubscribe.current = onSnapshot(q, (QuerySnapshot) => {
+				const fetchedMessages: MessageType[] = [];
+				QuerySnapshot.forEach((doc) => {
+					const documentToUuse = doc.data({ serverTimestamps: 'estimate' });
+					fetchedMessages.push({ ...documentToUuse, id: doc.id });
+				});
+				const sortedMessages = fetchedMessages.sort(
+					(a, b) =>
+						(a.createdAt ? a.createdAt?.seconds : 0) - (b.createdAt ? b.createdAt?.seconds : 0),
+				);
+				setMessages(sortedMessages);
 			});
-			const sortedMessages = fetchedMessages.sort((a, b) => a.createdAt - b.createdAt);
-			setMessages(sortedMessages);
-		});
+		}, []);
 		return () => unsubscribe;
-	}, []);
+	};
+
+	useUnsubScribe();
 
 	return (
 		<main className='chat-box'>
 			<div className='messages-wrapper'>
 				{messages?.map((message) => (
-					<Message key={message.id} message={message} />
+					<Message guestUser={guestUser} key={message.id} message={message} />
 				))}
 			</div>
 			<span ref={scroll}></span>
-			<SendMessage scroll={scroll} />
+			<SendMessage guestUser={guestUser} scroll={scroll} />
 		</main>
 	);
 };

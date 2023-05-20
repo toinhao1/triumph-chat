@@ -1,9 +1,8 @@
-import React from 'react';
 import GoogleSignin from '../img/btn_google_signin_dark_pressed_web.png';
 import { auth } from '../firebase';
 import { GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
 
-export const Welcome = () => {
+export const Welcome = ({ skipSignIn }: { skipSignIn: () => void }) => {
 	const googleSignIn = () => {
 		const provider = new GoogleAuthProvider();
 		signInWithRedirect(auth, provider);
@@ -17,6 +16,9 @@ export const Welcome = () => {
 			<button className='sign-in'>
 				<img onClick={googleSignIn} src={GoogleSignin} alt='sign in with google' />
 			</button>
+
+			<p>Skip Sign In</p>
+			<button onClick={skipSignIn}>Continue to chat</button>
 		</main>
 	);
 };
