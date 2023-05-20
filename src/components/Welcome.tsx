@@ -5,7 +5,7 @@ export const Welcome = ({ skipSignIn }: { skipSignIn: () => void }) => {
 		<main className='welcome'>
 			<h2>Welcome to Triumph Chat</h2>
 			<TriumphLogo width={100} height={100} />
-			<p>Sign in with Google to chat!</p>
+			<p>Skip sign in</p>
 			<button className='skip-signin' onClick={skipSignIn}>
 				Continue to chat
 			</button>
